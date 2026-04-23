@@ -1,0 +1,88 @@
+{
+  "fixtures": [
+    {
+      "id": "responses-hello",
+      "match": {
+        "endpoint": "responses",
+        "metadata": {
+          "test_case": "hello"
+        }
+      },
+      "replies": {
+        "response_text": "Hello from the mock Responses API.",
+        "response_usage": {
+          "input_tokens": 12,
+          "cached_tokens": 0,
+          "output_tokens": 9,
+          "reasoning_tokens": 0,
+          "total_tokens": 21
+        }
+      }
+    },
+    {
+      "id": "responses-summary",
+      "match": {
+        "endpoint": "responses",
+        "metadata": {
+          "test_case": "summary"
+        }
+      },
+      "replies": {
+        "response_text": "This is a deterministic summary fixture for testing.",
+        "response_usage": {
+          "input_tokens": 220,
+          "cached_tokens": 64,
+          "output_tokens": 31,
+          "reasoning_tokens": 0,
+          "total_tokens": 251
+        }
+      }
+    },
+    {
+      "id": "chat-hello",
+      "match": {
+        "endpoint": "chat_completions",
+        "metadata": {
+          "test_case": "hello"
+        }
+      },
+      "replies": {
+        "chat_text": "Hello from the mock Chat Completions API.",
+        "chat_usage": {
+          "prompt_tokens": 15,
+          "cached_tokens": 0,
+          "prompt_audio_tokens": 0,
+          "completion_tokens": 10,
+          "reasoning_tokens": 0,
+          "completion_audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0,
+          "total_tokens": 25
+        }
+      }
+    },
+    {
+      "id": "chat-billing",
+      "match": {
+        "endpoint": "chat_completions",
+        "metadata": {
+          "test_case": "billing"
+        }
+      },
+      "replies": {
+        "chat_text": "This fixture carries explicit usage values so billing code can assert exact numbers.",
+        "chat_usage": {
+          "prompt_tokens": 850,
+          "cached_tokens": 300,
+          "prompt_audio_tokens": 0,
+          "completion_tokens": 120,
+          "reasoning_tokens": 42,
+          "completion_audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0,
+          "total_tokens": 970
+        }
+      }
+    }
+  ]
+}
