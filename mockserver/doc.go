@@ -22,7 +22,7 @@
 // [Server.Handler] to a [net/http.Server].  Configure it via [Config] or load
 // settings from environment variables with [LoadConfigFromEnv].
 //
-// Fixture matching
+// # Fixture matching
 //
 // Each request is compared against the fixture list in order; the first match
 // wins. A fixture matches when every field it specifies agrees with the

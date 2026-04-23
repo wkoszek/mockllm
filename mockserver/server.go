@@ -31,7 +31,7 @@ func New(cfg Config) (*Server, error) {
 		if err != nil {
 			return nil, err
 		}
-	// else: no fixtures, no path — all requests return the default text
+		// else: no fixtures, no path — all requests return the default text
 	}
 
 	return &Server{
