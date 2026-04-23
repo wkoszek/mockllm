@@ -29,6 +29,22 @@ make run       # same, with debug logging
 make check     # fmt, vet, test
 ```
 
+## Running CLIs against the mock
+
+Start the server in one terminal, then in another:
+
+```
+mockllm codex  [args...]
+mockllm gemini [args...]
+mockllm claude [args...]
+```
+
+Each subcommand sets `OPENAI_BASE_URL` and `OPENAI_API_KEY=mock`, then
+execs the real binary with your arguments. The binary takes over the
+process — signals, stdin, stdout all work normally.
+
+If `OPENAI_MOCK_ADDR` is set, the base URL is derived from it automatically.
+
 ## Configuration
 
 All settings come from environment variables.
@@ -95,52 +111,13 @@ reply: input_tokens=42 cached_tokens=0 output_tokens=13 reasoning_tokens=0 total
 
 Works on both endpoints.
 
-## Pointing a client at it
+## Pointing a client at it manually
 
-Set the base URL to `http://127.0.0.1:8080`. Any API key is accepted.
+Any API key is accepted. Set:
 
 ```
 export OPENAI_BASE_URL=http://127.0.0.1:8080
 export OPENAI_API_KEY=mock
 ```
 
-### Claude Code
-
-Claude Code does not call the OpenAI API itself, but code you write
-inside a Claude Code session can. Set the variables in `.claude/settings.json`
-under `env` so they are available to every shell command and test run:
-
-```json
-{
-  "env": {
-    "OPENAI_BASE_URL": "http://127.0.0.1:8080",
-    "OPENAI_API_KEY": "mock"
-  }
-}
-```
-
-Start the mock server once in a terminal, then run your tests normally.
-
-### Codex CLI
-
-Codex reads `OPENAI_BASE_URL` and `OPENAI_API_KEY` from the environment.
-
-```
-OPENAI_BASE_URL=http://127.0.0.1:8080 OPENAI_API_KEY=mock codex ...
-```
-
-Or put them in your shell profile and leave them there while developing.
-
-The default fallback response keeps Codex functional on arbitrary inputs
-you have not written fixtures for.
-
-### Gemini CLI
-
-Gemini CLI supports an OpenAI-compatible mode. Pass the base URL via the
-flag or environment variable your version exposes:
-
-```
-OPENAI_BASE_URL=http://127.0.0.1:8080 OPENAI_API_KEY=mock gemini ...
-```
-
-Check `gemini --help` for the exact flag name; it varies by release.
+Or use the `mockllm codex / gemini / claude` subcommands which do this automatically.
