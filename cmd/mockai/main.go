@@ -12,10 +12,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/wkoszek/mockllm/mockserver"
+	"github.com/wkoszek/mockai/mockserver"
 )
 
-const usage = `usage: mockllm <command> [args...]
+const usage = `usage: mockai <command> [args...]
 
 Commands:
   server   start the mock server
@@ -55,7 +55,7 @@ func runServer() {
 	}
 
 	go func() {
-		log.Printf("mockllm listening on %s", cfg.ListenAddr)
+		log.Printf("mockai listening on %s", cfg.ListenAddr)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %v", err)
 		}

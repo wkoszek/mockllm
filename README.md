@@ -1,4 +1,4 @@
-# mockllm
+# mockai
 
 A mock HTTP server for the OpenAI API.
 
@@ -8,11 +8,11 @@ answer every time.
 ## Use as a Go library in tests
 
 ```
-go get github.com/wkoszek/mockllm
+go get github.com/wkoszek/mockai
 ```
 
 ```go
-import "github.com/wkoszek/mockllm/mockserver"
+import "github.com/wkoszek/mockai/mockserver"
 ```
 
 Start a server on a random port in one line. It shuts down automatically when
@@ -77,7 +77,7 @@ Both endpoints support streaming.
 ## Build and run
 
 ```
-go run ./cmd/mockllm server
+go run ./cmd/mockai server
 ```
 
 Listens on `:8080`. Set `OPENAI_MOCK_ADDR` to change it.
@@ -92,9 +92,9 @@ make check     # fmt, vet, test
 Start the server in one terminal, then in another:
 
 ```
-mockllm codex  [args...]
-mockllm gemini [args...]
-mockllm claude [args...]
+mockai codex  [args...]
+mockai gemini [args...]
+mockai claude [args...]
 ```
 
 Each subcommand sets `OPENAI_BASE_URL` and `OPENAI_API_KEY=mock`, then
@@ -178,4 +178,4 @@ export OPENAI_BASE_URL=http://127.0.0.1:8080
 export OPENAI_API_KEY=mock
 ```
 
-Or use the `mockllm codex / gemini / claude` subcommands which do this automatically.
+Or use the `mockai codex / gemini / claude` subcommands which do this automatically.

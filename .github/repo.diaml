@@ -1,4 +1,4 @@
-name: mockllm
+name: mockai
 description: Mock HTTP server implementing the OpenAI API for use in Go tests
 language: go
 license: MIT
