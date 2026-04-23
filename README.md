@@ -19,7 +19,7 @@ Both endpoints support streaming.
 ## Build and run
 
 ```
-go run ./cmd/openai-mock
+go run ./cmd/mockllm server
 ```
 
 Listens on `:8080`. Set `OPENAI_MOCK_ADDR` to change it.

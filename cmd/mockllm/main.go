@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,6 +14,11 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 || os.Args[1] != "server" {
+		fmt.Fprintf(os.Stderr, "usage: mockllm server\n")
+		os.Exit(1)
+	}
+
 	cfg := mockserver.LoadConfigFromEnv()
 	server, err := mockserver.New(cfg)
 	if err != nil {
@@ -26,7 +32,7 @@ func main() {
 	}
 
 	go func() {
-		log.Printf("openai mock listening on %s", cfg.ListenAddr)
+		log.Printf("mockllm listening on %s", cfg.ListenAddr)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %v", err)
 		}

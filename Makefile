@@ -18,4 +18,4 @@ vet:
 	$(GO) vet ./...
 
 run:
-	OPENAI_MOCK_DEBUG=1 $(GO) run ./cmd/openai-mock
+	OPENAI_MOCK_DEBUG=1 $(GO) run ./cmd/mockllm server
