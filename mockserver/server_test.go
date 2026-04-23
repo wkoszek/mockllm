@@ -248,6 +248,20 @@ func TestNewTestServer(t *testing.T) {
 	}
 }
 
+func TestNewTestServerNoFixtures(t *testing.T) {
+	ts := NewTestServer(t) // no fixtures — must not crash
+	body, _ := json.Marshal(map[string]any{"model": "gpt-4o", "input": "anything"})
+	resp, err := http.Post(ts.BaseURL()+"/v1/responses", "application/json", bytes.NewReader(body))
+	if err != nil {
+		t.Fatalf("post: %v", err)
+	}
+	defer resp.Body.Close()
+	got, _ := io.ReadAll(resp.Body)
+	if !strings.Contains(string(got), "Mock response.") {
+		t.Fatalf("expected default response, got: %s", got)
+	}
+}
+
 func TestMain(m *testing.M) {
 	io.Discard.Write(nil)
 	os.Exit(m.Run())

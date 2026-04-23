@@ -22,14 +22,16 @@ type Server struct {
 
 func New(cfg Config) (*Server, error) {
 	var fixtures []Fixture
-	if cfg.Fixtures != nil {
+	switch {
+	case cfg.Fixtures != nil:
 		fixtures = cfg.Fixtures
-	} else {
+	case cfg.FixturesPath != "":
 		var err error
 		fixtures, err = LoadFixtures(cfg.FixturesPath)
 		if err != nil {
 			return nil, err
 		}
+	// else: no fixtures, no path — all requests return the default text
 	}
 
 	return &Server{

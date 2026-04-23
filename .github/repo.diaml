@@ -1,0 +1,11 @@
+name: mockllm
+description: Mock HTTP server implementing the OpenAI API for use in Go tests
+language: go
+license: MIT
+topics:
+  - openai
+  - mock
+  - testing
+  - llm
+  - go
+public: true
