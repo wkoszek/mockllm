@@ -229,6 +229,25 @@ const testFixtures = `{
   ]
 }`
 
+func TestNewTestServer(t *testing.T) {
+	ts := NewTestServer(t, Fixture{
+		ID:      "greet",
+		Match:   FixtureMatch{Endpoint: "responses", InputContains: "hello"},
+		Replies: FixtureReply{ResponseText: "Hi there!"},
+	})
+
+	body, _ := json.Marshal(map[string]any{"model": "gpt-4o", "input": "say hello"})
+	resp, err := http.Post(ts.BaseURL()+"/v1/responses", "application/json", bytes.NewReader(body))
+	if err != nil {
+		t.Fatalf("post: %v", err)
+	}
+	defer resp.Body.Close()
+	got, _ := io.ReadAll(resp.Body)
+	if !strings.Contains(string(got), "Hi there!") {
+		t.Fatalf("unexpected body: %s", got)
+	}
+}
+
 func TestMain(m *testing.M) {
 	io.Discard.Write(nil)
 	os.Exit(m.Run())

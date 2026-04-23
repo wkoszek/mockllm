@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"openaimock/internal/mockserver"
+	"github.com/wkoszek/mockllm/mockserver"
 )
 
 const usage = `usage: mockllm <command> [args...]

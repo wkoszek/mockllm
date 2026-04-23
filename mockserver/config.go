@@ -5,6 +5,7 @@ import "os"
 type Config struct {
 	ListenAddr              string
 	FixturesPath            string
+	Fixtures                []Fixture // if set, used directly instead of loading from FixturesPath
 	OpenAIBaseURL           string
 	OpenAIAPIKey            string
 	EnableOpenAIInputTokens bool

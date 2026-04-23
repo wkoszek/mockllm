@@ -21,9 +21,15 @@ type Server struct {
 }
 
 func New(cfg Config) (*Server, error) {
-	fixtures, err := LoadFixtures(cfg.FixturesPath)
-	if err != nil {
-		return nil, err
+	var fixtures []Fixture
+	if cfg.Fixtures != nil {
+		fixtures = cfg.Fixtures
+	} else {
+		var err error
+		fixtures, err = LoadFixtures(cfg.FixturesPath)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &Server{
