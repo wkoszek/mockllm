@@ -5,6 +5,64 @@ A mock HTTP server for the OpenAI API.
 Useful when you want tests that run fast, offline, and produce the same
 answer every time.
 
+## Use as a Go library in tests
+
+```
+go get github.com/wkoszek/mockllm
+```
+
+```go
+import "github.com/wkoszek/mockllm/mockserver"
+```
+
+Start a server on a random port in one line. It shuts down automatically when
+the test ends.
+
+```go
+func TestMyAIFeature(t *testing.T) {
+    ts := mockserver.NewTestServer(t,
+        mockserver.Fixture{
+            ID: "summarize",
+            Match: mockserver.FixtureMatch{
+                Endpoint:      "responses",
+                InputContains: "summarize",
+            },
+            Replies: mockserver.FixtureReply{
+                ResponseText: "Short summary.",
+                ResponseUsage: &mockserver.ResponsesUsage{
+                    InputTokens:  100,
+                    OutputTokens: 10,
+                    TotalTokens:  110,
+                },
+            },
+        },
+    )
+    // ts.BaseURL() → "http://127.0.0.1:<random-port>"
+    client := openai.NewClient(
+        option.WithBaseURL(ts.BaseURL()),
+        option.WithAPIKey("mock"),
+    )
+    resp, _ := client.Responses.New(ctx, openai.ResponseNewParams{
+        Model: openai.String("gpt-4o"),
+        Input: openai.ResponseNewParamsInputUnion{...},
+    })
+    // assert on resp...
+}
+```
+
+Without fixtures every request returns the default text (`"Mock response."` /
+`"Mock chat response."`), which is enough for tests that only care about
+whether the call was made at all.
+
+To load fixtures from a JSON file instead of constructing them in Go, use
+[`LoadFixtures`](mockserver/fixtures.go) and pass the result via
+`Config.Fixtures`:
+
+```go
+fixtures, _ := mockserver.LoadFixtures("testdata/fixtures.json")
+ts := mockserver.NewTestServer(t, fixtures...)
+```
+
 ## Endpoints
 
 ```
